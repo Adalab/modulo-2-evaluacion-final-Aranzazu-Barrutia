@@ -5,25 +5,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TV shows search</title>
-    <link rel="stylesheet" href="./styles/main.css" />
+    <link rel="stylesheet" href="./assets/css/main.css" />
   </head>
 
   <body>
-    <main>
+    <header>
       <h1>Buscador de series</h1>
-      <form action="">
+    </header>
+    <main>
+      <!-- buscador de series -->
+      <form action="|">
         <input
-          class="js-input-search"
           type="text"
-          name=""
-          id=""
-          placeholder="Busca tu serie"
+          value=""
+          placeholder="Busca aquí tu serie"
+          class="js-textSearch"
         />
-        <button class="js-btn-search">Buscar</button>
+        <button class="js-buttonSearch">Buscar</button>
       </form>
-      <section class="js-form-list"></section>
-      <section class="js-fav-list"></section>
+      <!-- lista de series -->
+      <ul class="js-listcontainer"></ul>
+      <!-- lista favoritas -->
+      <ul class="js-favs-list"></ul>
     </main>
-    <script src="./js/main.js"></script>
+    <script src="./assets/js/main.js"></script>
   </body>
 </html>
