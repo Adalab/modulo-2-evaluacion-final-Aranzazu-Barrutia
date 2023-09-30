@@ -27,52 +27,82 @@ creo cobst para almacenar, hago un JSON.stringify al ARRAY de FAVS, luego tendre
 
 //variables globales
 const inputSearch = document.querySelector('.js-textSearch');
-
 const btnSearch = document.querySelector('.js-buttonSearch');
 const formList = document.querySelector('.js-listcontainer');
+const favList = document.querySelector('.js-favs-list');
 
-const favList = document.querySelector('.js-fav-list');
-const value = inputSearch.value;
-const url = `//api.tvmaze.com/search/shows?q=${value}`;
-
-// eslint-disable-next-line no-unused-vars
-const imageMine = `https://www.pexels.com/es-es/foto/hombre-y-mujer-sentado-en-un-sofa-delante-de-un-television-4009402/`;
 //Array series
 let searchSeries = [];
+const favSeries = new Array();
 //funciones
 function getApiData() {
   const value = inputSearch.value;
   const url = `//api.tvmaze.com/search/shows?q=${value}`;
   fetch(url)
-    .then((response) => response.json())
+    .then((response) => {
+      return response.json();
+    })
     .then((dataAPI) => {
       // eslint-disable-next-line no-console
-      console.log(dataAPI);
+      console.log('DataAPI -> ', dataAPI);
       searchSeries = dataAPI;
-      renderList();
-    });
+      renderSerieList(searchSeries);
+    })
+    .catch((e) => console.log('Error -> ', e));
 }
-getApiData(); //pintar series
-//recorremos el listado
-// eslint-disable-next-line no-unused-vars
+
+//renderizo una serie y creo un html
 function renderSerie(oneSerie) {
-  let html = '';
-  html += `<h3>${searchSeries[oneSerie].show.name}</h3>`;
-  html += `<img src="${url}" alt="">`;
-  return html;
+  const id = oneSerie.show.id;
+  const name = oneSerie.show.name;
+  const alternativeImageUrl =
+    'https://via.placeholder.com/210x295/ffffff/666666/?text=TV';
+  const imageUrl =
+    oneSerie.show.image === null
+      ? alternativeImageUrl
+      : oneSerie.show.image.medium;
+  return `<li  id=${id} class="serie js-serie"><img src="${imageUrl}" alt=""><h2>${name}</h2></li>`;
 }
-function renderList() {
-  formList.innerHTML = '';
-  for (let i = 0; i < searchSeries.length; i++) {
-    if (searchSeries[i].show.image.medium !== null) {
-      imageMine;
-    } else {
-      searchSeries[i].show.image.medium;
-    }
+//recorremos el listado
+function renderSerieList(listSeries) {
+  let html = '<ul>';
+  for (const oneSerie of listSeries) {
+    html += renderSerie(oneSerie);
   }
+  html += '</ul>';
+  formList.innerHTML = html;
+  addEventToSerie();
 }
+
+function renderFavSerieList(listSeries) {
+  let html = '<ul>';
+  for (const oneSerie of listSeries) {
+    if (oneSerie === undefined) {
+      continue;
+    }
+    html += renderSerie(oneSerie);
+  }
+  html += '</ul>';
+  favList.innerHTML = html;
+}
+
 function handleClick(event) {
   event.preventDefault();
+  const idSerieClick = Number(event.currentTarget.id);
+  const favSerie = searchSeries.find(
+    (oneSerie) => oneSerie.show.id === idSerieClick
+  );
+  if (favSeries.indexOf(favSerie) === -1) {
+    favSeries.push(favSerie);
+  }
+
+  renderFavSerieList(favSeries);
+}
+function addEventToSerie() {
+  const allSeries = document.querySelectorAll('.js-serie');
+  for (const oneSerie of allSeries) {
+    oneSerie.addEventListener('click', handleClick);
+  }
 }
 //evento click sobre boton -> ejecuta handle
 btnSearch.addEventListener('click', handleClick);
