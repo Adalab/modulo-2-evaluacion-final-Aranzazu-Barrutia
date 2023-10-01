@@ -46,12 +46,13 @@ function getApiData() {
       // eslint-disable-next-line no-console
       console.log('DataAPI -> ', dataAPI);
       searchSeries = dataAPI;
-      renderSerieList(searchSeries);
-    })
-    .catch((e) => console.log('Error -> ', e));
+      renderSerieList(dataAPI);
+      renderFavSerieList(favSeries);
+    });
+  //.catch((e) => console.log('Error -> ', e));
 }
 
-//renderizo una serie y creo un html
+//Datos de una serie, generamos el HTML para  luego ver la serie en una lista con su nombre e imagen.
 function renderSerie(oneSerie) {
   const id = oneSerie.show.id;
   const name = oneSerie.show.name;
@@ -63,7 +64,8 @@ function renderSerie(oneSerie) {
       : oneSerie.show.image.medium;
   return `<li  id=${id} class="serie js-serie"><img src="${imageUrl}" alt=""><h2>${name}</h2></li>`;
 }
-//recorremos el listado
+//muestro el listado de series,genero el HTML y
+//cada serie se genera usando la función renderSerie
 function renderSerieList(listSeries) {
   let html = '<ul>';
   for (const oneSerie of listSeries) {
@@ -73,7 +75,7 @@ function renderSerieList(listSeries) {
   formList.innerHTML = html;
   addEventToSerie();
 }
-
+//muestro lalista de favoritos en el HTML, recorro el array de series y omito las series que aparcen como undefined.
 function renderFavSerieList(listSeries) {
   let html = '<ul>';
   for (const oneSerie of listSeries) {
@@ -85,7 +87,8 @@ function renderFavSerieList(listSeries) {
   html += '</ul>';
   favList.innerHTML = html;
 }
-
+//funcion manejadora xa el ev click de una serie, encunetro la serie en la lista de search series,
+//la pongo en favoritas y se muestra a la usuaria la lista de fav actualizada.
 function handleClick(event) {
   event.preventDefault();
   const idSerieClick = Number(event.currentTarget.id);
@@ -97,12 +100,15 @@ function handleClick(event) {
   }
 
   renderFavSerieList(favSeries);
+  localStorage.setItem('favorites', JSON.stringify(favSerie));
 }
+//aagrego  el click a cada elemento serie para que la usuaria pueda agregarla a la lista favoritas.
 function addEventToSerie() {
   const allSeries = document.querySelectorAll('.js-serie');
   for (const oneSerie of allSeries) {
     oneSerie.addEventListener('click', handleClick);
   }
 }
+getApiData();
 //evento click sobre boton -> ejecuta handle
 btnSearch.addEventListener('click', handleClick);

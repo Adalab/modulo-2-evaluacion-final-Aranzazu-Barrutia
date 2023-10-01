@@ -1,0 +1,12 @@
+.body {
+  background-color: aquamarine;
+  color: red;
+}
+.div_list {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  &_ul {
+    border-radius: 2rem;
+  }
+}
