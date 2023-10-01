@@ -30,10 +30,12 @@ const inputSearch = document.querySelector('.js-textSearch');
 const btnSearch = document.querySelector('.js-buttonSearch');
 const formList = document.querySelector('.js-listcontainer');
 const favList = document.querySelector('.js-favs-list');
+const btnReset = document.querySelector('.js-button-reset');
+//const icon = document.querySelector('.js-delete-icon');
 
 //Array series
 let searchSeries = [];
-const favSeries = new Array();
+let favSeries = new Array();
 //funciones
 function getApiData() {
   const value = inputSearch.value;
@@ -62,7 +64,7 @@ function renderSerie(oneSerie) {
     oneSerie.show.image === null
       ? alternativeImageUrl
       : oneSerie.show.image.medium;
-  return `<li  id=${id} class="serie js-serie"><img src="${imageUrl}" alt=""><h2>${name}</h2></li>`;
+  return `<li  id=${id} class="div_list_section_ul_card js-serie"><img class="div_list_section_ul_img" src="${imageUrl}" alt=""><h2>${name}</h2><button class="btnX js-button-delete" onclick="">X</button></li>`;
 }
 //muestro el listado de series,genero el HTML y
 //cada serie se genera usando la función renderSerie
@@ -91,17 +93,19 @@ function renderFavSerieList(listSeries) {
 //la pongo en favoritas y se muestra a la usuaria la lista de fav actualizada.
 function handleClick(event) {
   event.preventDefault();
-  const idSerieClick = Number(event.currentTarget.id);
+  const idSerieClick = parseInt(event.currentTarget.id);
   const favSerie = searchSeries.find(
     (oneSerie) => oneSerie.show.id === idSerieClick
   );
   if (favSeries.indexOf(favSerie) === -1) {
     favSeries.push(favSerie);
   }
-
+  event.currentTarget.classList.add('oneSerie');
+  event.currentTarget.classList.add('favSerie');
   renderFavSerieList(favSeries);
   localStorage.setItem('favorites', JSON.stringify(favSerie));
 }
+
 //aagrego  el click a cada elemento serie para que la usuaria pueda agregarla a la lista favoritas.
 function addEventToSerie() {
   const allSeries = document.querySelectorAll('.js-serie');
@@ -109,6 +113,23 @@ function addEventToSerie() {
     oneSerie.addEventListener('click', handleClick);
   }
 }
+
+//function handleDelete() {}
+function handleReset() {
+  const fav = document.querySelector('.js-section-fav');
+  favSeries = [];
+  fav.innerHTML = '';
+  location.reload();
+  localStorage.setItem('myShows', JSON.stringify(favList));
+}
+btnReset.addEventListener('click', handleReset);
+
+function updateFavList() {
+  renderFavSerieList(favSeries);
+}
+updateFavList();
 getApiData();
 //evento click sobre boton -> ejecuta handle
 btnSearch.addEventListener('click', handleClick);
+
+//btnX.addEventListener('click', handleDelete);

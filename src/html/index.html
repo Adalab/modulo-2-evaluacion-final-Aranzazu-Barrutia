@@ -22,7 +22,9 @@
           placeholder="Busca aquí tu serie"
           class="js-textSearch"
         />
-        <button class="js-buttonSearch" onclick="getApiData()">Buscar</button>
+        <button class="btn js-buttonSearch" onclick="getApiData()">
+          Buscar
+        </button>
       </form>
       <!-- lista de series -->
       <div class="div_list">
@@ -30,9 +32,10 @@
           <ul class="div_list_section_ul js-listcontainer"></ul>
         </section>
         <!-- lista favoritas -->
-        <section class="div_section_fav">
+        <section class="div_section_fav js-section-fav">
           <h2 class="div_section_fav_h2">Series Favoritas</h2>
           <ul class="div_section_fav_ul js-favs-list"></ul>
+          <button class="btnR js-button-reset" onclick="">Reset</button>
         </section>
       </div>
     </main>
