@@ -1,25 +1,14 @@
 .body {
-  background-color: aquamarine;
-  color: red;
+  color: purple;
   list-style: none;
 }
+
 .div_list {
   display: flex;
   flex-direction: row-reverse;
-  justify-content: space-between;
+  justify-content: flex-end;
   list-style: none;
-
-  &_oneSerie {
-    background-color: snow;
-    border: 2px solid black;
-    color: black;
-    border-radius: 15px;
-    width: 150px;
-  }
-}
-.img {
-  width: 3px;
-  border-radius: 15px;
+  gap: 8rem;
 }
 
 .btn {
@@ -28,24 +17,10 @@
   padding: 0.2rem 1rem;
   border: 2px solid purple;
   cursor: pointer;
+  border-radius: 3px;
 }
-.favSerie {
-  //background-color: rgb(231, 58, 219, 0.3s);
-  border: 2px solid rgb(203, 37, 37);
-  color: snow;
-  border-radius: 15px;
-  width: 150px;
+.favSeries {
+  background-color: yellow;
+  color: #ff00d9;
+  list-style: none;
 }
-.favSerie img {
-  width: 100%;
-  height: auto;
-  border-radius: 15px;
-}
-// .favSerie:active,
-// .favSerie:focus {
-//   background-color: yellow; // Cambia el color de fondo al hacer clic
-//   color: black; // Cambia el color del texto al hacer clic
-//   transition: background-color 0.3s ease, color 0.3s ease; // Transiciones suaves
-//   border: 2px solid green; /* Agrega un borde al hacer clic */
-//   transition: border 0.3s ease; /* Transición suave */
-// }
